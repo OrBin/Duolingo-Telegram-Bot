@@ -23,13 +23,13 @@ print json_data[u'last_streak'][u'last_reached_goal']
 #pprint.pprint(json_data[u'language_data'][u'ru'][u'skills'][0], indent=4)
 """
 
-import config
-import requests
 import logging
-import pymongo
 import os
+import pymongo
+import requests
 from telegram.ext import Updater
 from telegram import ParseMode
+from config import config
 
 MAX_REQUEST_RETRIES = 3
 

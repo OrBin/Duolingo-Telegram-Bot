@@ -1,9 +1,9 @@
-import config
 import re
 import pymongo
 import logging
 import os
 from telegram.ext import Updater, CommandHandler
+from config import config
 
 SET_USERNAME_REGEXP = re.compile("\/set_username (\w+) *")
 
