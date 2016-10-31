@@ -3,7 +3,7 @@ import pymongo
 import logging
 import os
 from telegram.ext import Updater, CommandHandler
-from config import config
+from config import config # This line requires PYTHONPATH to include config's parent directory
 
 SET_USERNAME_REGEXP = re.compile("\/set_username (\w+) *")
 
