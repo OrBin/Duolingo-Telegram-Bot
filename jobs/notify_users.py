@@ -28,7 +28,7 @@ def get_message(context):
         """Hi! You haven\'t met your daily goal for today yet...\ncontinue your <b>{{ current_streak }}</b> day streak.""",
         """Hey, what about increasing your streak to <b>{{ next_streak }}</b>..?""",
         """Wanna make your Duolingo streak <b>{{ next_streak }}</b>? Take a lesson now!""",
-        """Only {{ score_left_to_next_level }} points left, take another step towards <b>level {{ next_level }}</b> today!""",
+        """Only {{ score_left_to_next_level }} points left - take another step towards <b>level {{ next_level }}</b> today!""",
         """Don't forget to strengthen your {{ language_name }} today! Your skills are only {{ language_strength_percent }}% strong.""",
         """You haven't taken any  {{ language_name }} lesson today. Take <b>{{ next_lesson_title }}</b> lesson no. <b>{{ next_lesson_number }}</b> now! :)"""
         ]
