@@ -46,8 +46,7 @@ def set_username(bot, update):
                     "duolingo_username": duolingo_username
                 },
                 "$setOnInsert": {
-                    "chat_id": update.message.chat_id,
-                    "duolingo_username": duolingo_username
+                    "chat_id": update.message.chat_id
                 }
             },
             upsert=True)
