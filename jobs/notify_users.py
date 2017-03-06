@@ -30,8 +30,12 @@ def get_message(context):
         """Wanna make your Duolingo streak <b>{{ next_streak }}</b>? Take a lesson now!""",
         """Only {{ score_left_to_next_level }} points left - take another step towards <b>level {{ next_level }}</b> today!""",
         """Don't forget to strengthen your {{ language_name }} today! Your skills are only {{ language_strength_percent }}% strong.""",
-        """You haven't taken any  {{ language_name }} lesson today. Take <b>{{ next_lesson_title }}</b> lesson no. <b>{{ next_lesson_number }}</b> now! :)"""
-        ]
+        """You haven't taken any  {{ language_name }} lesson today. Take <b>{{ next_lesson_title }}</b> lesson no. <b>{{ next_lesson_number }}</b> now! :)""",
+        """Hey, you're on a {{ current_streak }} day streak! Isn't it the perfect time to make it <b>{{ next_streak }}</b>?""",
+        """Only {{ score_left_to_next_level }} points left until you reach level {{ next_level }}!\nThat's pretty impressive, let's do it!""",
+        """Whoa, you've learned {{ num_skills_learned }} skills by now! Keep this number growing in just a few minutes, promise not to annoy you again today!""",
+        """Speaking {{ language_name }} is a useful skill! Spending only a few minutes of your time now will help you achieve it sooner!"""
+    ]
 
     template = Template(random.choice(templates_text))
     return template.render(context)
