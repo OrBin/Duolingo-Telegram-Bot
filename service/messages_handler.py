@@ -22,7 +22,9 @@ Type /help for help""")
 def help(bot, update):
     update.message.reply_text("""My available commands:
 /help - to show this help message
-/set_username <your_duolingo_username> - to let me know what is your duolingo username""")
+/set_username <your_duolingo_username> - to let me know what is your duolingo username
+/mute - to mute the reminders
+/unmute - to unmute the reminders""")
     logging.info("/help message sent")
 
 # /set_username handler
