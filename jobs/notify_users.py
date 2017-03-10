@@ -78,8 +78,11 @@ for user in users:
         logging.error("Could not get data for duolingo user %s (chat id %s)", user[u'duolingo_username'], user[u'chat_id'])
     elif data[u'streak_extended_today']:
         logging.info("Duolingo user %s (chat id %s) has done a good job today!", user[u'duolingo_username'], user[u'chat_id'])
+    elif ('mute' not in user) or (not user['mute']):
+        logging.info("Duolingo user %s (chat id %s) is muted.", user[u'duolingo_username'], user[u'chat_id'])
     else:
         learning_language_data = data[u'language_data'][data[u'learning_language']]
+
         dp.bot.send_message(chat_id=user[u'chat_id'],
                             text=get_message({
                                 'current_streak': data[u'site_streak'],
