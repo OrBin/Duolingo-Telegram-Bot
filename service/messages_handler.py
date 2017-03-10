@@ -56,6 +56,37 @@ def set_username(bot, update):
         update.message.reply_text('Username successfully saved as %s, thank you!' % duolingo_username)
         logging.info("/set_username: Chat id %s set username to %s", update.message.chat_id, duolingo_username)
 
+# /mute and /unmute handler
+def mute_and_unmute(bot, update):
+
+    requested_to_mute = update.message.text.startswith("/mute")
+    command = "mute" if requested_to_mute else "unmute"
+
+    mongo_client = pymongo.MongoClient()
+    mongo_db = mongo_client.duolingo_telegram_bot
+
+    if mongo_db.users_data.find( { "chat_id": update.message.chat_id } ).count() > 0:
+
+        mongo_db.users_data.update(
+            {
+                "chat_id": update.message.chat_id
+            },
+            {
+                "$set": {
+                    "mute": requested_to_mute
+                }
+            },
+            upsert=False)
+
+    mongo_client.close()
+
+    if requested_to_mute:
+        update.message.reply_text('Successfully muted reminders. Hope to see you soon!')
+    else:
+        update.message.reply_text('Successfully unmuted reminders. Glad to see you back!')
+
+    logging.info("/%s: Chat id %s %sd", command, update.message.chat_id, command)
+
 # Errors handler
 def error(bot, update, error):
     logging.warning('Update "%s" caused error "%s"' % (update, error))
@@ -79,6 +110,8 @@ dp = updater.dispatcher
 dp.add_handler(CommandHandler("start", start))
 dp.add_handler(CommandHandler("help", help))
 dp.add_handler(CommandHandler("set_username", set_username))
+dp.add_handler(CommandHandler("mute", mute_and_unmute))
+dp.add_handler(CommandHandler("unmute", mute_and_unmute))
 
 # TODO Add "remind me in ..." option
 # log all errors
