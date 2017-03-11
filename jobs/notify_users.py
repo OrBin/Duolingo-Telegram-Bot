@@ -73,31 +73,32 @@ users = mongo_db.users_data.find({})
 mongo_client.close()
 
 for user in users:
-    data = get_user_data(user[u'duolingo_username'])
-    if not data:
-        logging.error("Could not get data for duolingo user %s (chat id %s)", user[u'duolingo_username'], user[u'chat_id'])
-    elif data[u'streak_extended_today']:
-        logging.info("Duolingo user %s (chat id %s) has done a good job today!", user[u'duolingo_username'], user[u'chat_id'])
-    elif 'mute' in user and user['mute']:
+    if 'mute' in user and user['mute']:
         logging.info("Duolingo user %s (chat id %s) is muted.", user[u'duolingo_username'], user[u'chat_id'])
     else:
-        learning_language_data = data[u'language_data'][data[u'learning_language']]
+        data = get_user_data(user[u'duolingo_username'])
+        if not data:
+            logging.error("Could not get data for duolingo user %s (chat id %s)", user[u'duolingo_username'], user[u'chat_id'])
+        elif data[u'streak_extended_today']:
+            logging.info("Duolingo user %s (chat id %s) has done a good job today!", user[u'duolingo_username'], user[u'chat_id'])
+        else:
+            learning_language_data = data[u'language_data'][data[u'learning_language']]
 
-        dp.bot.send_message(chat_id=user[u'chat_id'],
-                            text=get_message({
-                                'current_streak': data[u'site_streak'],
-                                'next_streak': int(data[u'site_streak']) + 1,
-                                'score_left_to_next_level': learning_language_data[u'level_left'],
-                                'current_level': learning_language_data[u'level'],
-                                'next_level': int(learning_language_data[u'level']) + 1,
-                                'percent_to_next_level': learning_language_data[u'level_percent'],
-                                'language_name': learning_language_data[u'language_string'],
-                                'language_strength_percent': int(float(learning_language_data[u'language_strength']) * 100),
-                                'num_skills_learned': learning_language_data[u'num_skills_learned'],
-                                'language_points': learning_language_data[u'points'],
-                                'lingots': data[u'rupees'],
-                                'next_lesson_title': learning_language_data[u'next_lesson'][u'skill_title'],
-                                'next_lesson_number': learning_language_data[u'next_lesson'][u'lesson_number']
-                            }),
-                            parse_mode=ParseMode.HTML)
-        logging.info("Sent a reminder to duolingo user %s (chat id %s)", user[u'duolingo_username'], user[u'chat_id'])
+            dp.bot.send_message(chat_id=user[u'chat_id'],
+                                text=get_message({
+                                    'current_streak': data[u'site_streak'],
+                                    'next_streak': int(data[u'site_streak']) + 1,
+                                    'score_left_to_next_level': learning_language_data[u'level_left'],
+                                    'current_level': learning_language_data[u'level'],
+                                    'next_level': int(learning_language_data[u'level']) + 1,
+                                    'percent_to_next_level': learning_language_data[u'level_percent'],
+                                    'language_name': learning_language_data[u'language_string'],
+                                    'language_strength_percent': int(float(learning_language_data[u'language_strength']) * 100),
+                                    'num_skills_learned': learning_language_data[u'num_skills_learned'],
+                                    'language_points': learning_language_data[u'points'],
+                                    'lingots': data[u'rupees'],
+                                    'next_lesson_title': learning_language_data[u'next_lesson'][u'skill_title'],
+                                    'next_lesson_number': learning_language_data[u'next_lesson'][u'lesson_number']
+                                }),
+                                parse_mode=ParseMode.HTML)
+            logging.info("Sent a reminder to duolingo user %s (chat id %s)", user[u'duolingo_username'], user[u'chat_id'])
